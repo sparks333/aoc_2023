@@ -16,3 +16,4 @@ Cargo.lock
 *.exe
 .vscode
 *.toml
+.vs
