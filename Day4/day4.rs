@@ -1,7 +1,12 @@
 use std::{fs::read_to_string};
+use std::collections::HashMap;
 
-fn score(board:&Vec<String>, index:usize) -> i32
+fn score(board:&Vec<String>, index:usize, cardmap:&mut HashMap<usize, i32>) -> i32
 {
+    if (*cardmap).contains_key(&index)
+    {
+        return (*cardmap)[&index];
+    }
     let line:String = (*board[index]).to_string();
     let split_line:Vec<String> = line.split(|x| (x == ' ') || (x == ':') || (x == ',')).filter(|s| !s.is_empty()).map(str::to_string).collect();
     let separator = split_line.iter().position(|x| x == "|").unwrap();
@@ -22,8 +27,9 @@ fn score(board:&Vec<String>, index:usize) -> i32
     let mut total = common.len() as i32;
     for i in 0..common.len()
     {
-        total += score(board, index+i+1);
+        total += score(board, index+i+1, cardmap);
     }
+    (*cardmap).insert(index, total);
     return total;
 
 }
@@ -60,6 +66,7 @@ fn main() {
     println!("Part 1: {}", total);
 
     let mut board:Vec<String> = vec![];
+    let mut cardmap:HashMap<usize, i32> = HashMap::new();
 
     for line in read_to_string("input.txt").unwrap().lines()
     {
@@ -69,7 +76,7 @@ fn main() {
     total = board.len() as i32;
     for i in 0..board.len()
     {
-        total += score(&board, i);
+        total += score(&board, i, &mut cardmap);
     }
 
     println!("Part 2: {}", total);
