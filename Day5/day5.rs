@@ -142,21 +142,13 @@ fn main() {
 
     for seed in seeds
     {
-        //println!("Seed {seed}");
         let soil = convert(seed, &seed_to_soil);
-        //println!("Soil {soil}");
         let fertilizer = convert(soil, &soil_to_fertilizer);
-        //println!("Fertilizer {fertilizer}");
         let water = convert(fertilizer, &fertilizer_to_water);
-        //println!("Water {water}");
         let light = convert(water, &water_to_light);
-        //println!("Light {light}");
         let temperature = convert(light, &light_to_temperature);
-        //println!("Temperature {temperature}");
         let humidity = convert(temperature, &temperature_to_humidity);
-        //println!("Humidity {humidity}");
         let location = convert(humidity, &humidity_to_location);
-        //println!("Location {location}");
         if min_location == -1 || min_location > location
         {
             min_location = location;
@@ -186,21 +178,13 @@ fn main() {
     
     min_location = -1;
 
-    //println!("Seed {seed}");
     let soil_list = convert_ranges(&seed_list, &seed_to_soil);
-    //println!("Soil {soil}");
-    let fertilizer_list = convert_ranges(&soil_list, &soil_to_fertilizer);
-    //println!("Fertilizer {fertilizer}");
+    let fertilizer_list: Vec<(i64, i64)> = convert_ranges(&soil_list, &soil_to_fertilizer);
     let water_list = convert_ranges(&fertilizer_list, &fertilizer_to_water);
-    //println!("Water {water}");
     let light_list = convert_ranges(&water_list, &water_to_light);
-    //println!("Light {light}");
     let temperature_list = convert_ranges(&light_list, &light_to_temperature);
-    //println!("Temperature {temperature}");
     let humidity_list = convert_ranges(&temperature_list, &temperature_to_humidity);
-    //println!("Humidity {humidity}");
     let location_list = convert_ranges(&humidity_list, &humidity_to_location);
-    //println!("Location {location}");
     
     for loc in location_list
     {
