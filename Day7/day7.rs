@@ -22,26 +22,6 @@ fn convert_label(c:char) -> usize
     }
 }
 
-fn convert_label_joker(c:char) -> usize
-{
-    match c
-    {
-        'A'=>return 12,
-        'K'=>return 11,
-        'Q'=>return 10,
-        'T'=>return 9, 
-        '9'=>return 8,
-        '8'=>return 7,
-        '7'=>return 6,
-        '6'=>return 5,
-        '5'=>return 4,
-        '4'=>return 3,
-        '3'=>return 2,
-        '2'=>return 1,
-        'J'=>return 0,
-        _=>return 0
-    }
-}
 struct Hand
 {
     hand:Vec<char>,
@@ -108,7 +88,27 @@ impl Hand
             {
                 if self.wild
                 {
-                    return convert_label_joker(self.hand[j]).cmp(&convert_label_joker(other.hand[j]));
+                    let lhs:i32;
+                    if self.hand[j] == 'J'
+                    {
+                        lhs = -1;
+                    }
+                    else
+                    {
+                        lhs = convert_label(self.hand[j]) as i32
+                    }
+
+                    let rhs:i32;
+                    if other.hand[j] == 'J'
+                    {
+                        rhs = -1;
+                    }
+                    else 
+                    {
+                        rhs = convert_label(other.hand[j]) as i32
+                    }
+
+                    return lhs.cmp(&rhs);
                 }
                 else 
                 {
