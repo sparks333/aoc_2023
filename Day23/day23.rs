@@ -28,14 +28,11 @@ fn main() {
         let s_count = step.1;
         let map = step.2;
 
-        if cost[y][x] > s_count
-        {
-            continue;
-        }
+        if cost[y][x] > s_count { continue; }
+        
         cost[y][x] = s_count;
 
-        if x == target.0 && y == target.1
-        {
+        if x == target.0 && y == target.1 {
             max_steps = cmp::max(s_count, max_steps);
             continue;
         }
@@ -76,8 +73,7 @@ fn main() {
     let mut map = board.clone();
     map[0][1] = '.';
 
-    loop
-    {
+    loop {
         if paths.len() == 0 {break;}
         let path = paths.pop().unwrap();
 
@@ -86,10 +82,7 @@ fn main() {
         let s_count = path.1;
         let prev_node = path.2;
         
-        if x == prev_node.0 && y == prev_node.1
-        {
-            continue;
-        }
+        if x == prev_node.0 && y == prev_node.1 { continue; }
 
         let mut dir_count = 0;
         if x > 0 && map[y][x-1] != '#' { dir_count +=  1; }
@@ -152,8 +145,7 @@ fn main() {
         let curr_node: (usize, usize) = node.0;
         let cost = node.1;
 
-        if curr_node == target
-        {
+        if curr_node == target {
             max_steps = cmp::max(max_steps, cost);
             continue;
         }
@@ -162,10 +154,8 @@ fn main() {
 
         let paths = graph.get(&curr_node).unwrap();
 
-        for path in paths
-        {
-            if !breadcrumbs.contains(&path.0)
-            {
+        for path in paths {
+            if !breadcrumbs.contains(&path.0) {
                 let mut new_breadcrumbs = breadcrumbs.clone();
                 new_breadcrumbs.push(path.0);
                 nodes.push((path.0, cost + path.1, new_breadcrumbs));
@@ -174,5 +164,4 @@ fn main() {
     }
 
     println!("Part 2: {}", max_steps);
-    // Greater than 5242
 }
